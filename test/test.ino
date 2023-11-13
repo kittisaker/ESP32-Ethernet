@@ -1,8 +1,3 @@
-# ESP32-Ethernet : Chapter 4 Get Ethernet IP address
-
-## Tested by KOPE
-
-```cpp
 #include <SPI.h>
 #include <Ethernet.h>
 
@@ -42,12 +37,3 @@ void setup() {
 void loop() {
   // The loop function is left empty if you don't need to perform any repeated action.
 }
-```
-
-Serial Monitor :
-```shell
-DHCP OK!
-My IP address: 192.168.0.101
-```
-
----
