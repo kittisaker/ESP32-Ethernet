@@ -1,8 +1,3 @@
-# ESP32-Ethernet : Chapter 1 Get  Connect to Ethernet
-
-## Tested by KOPE
-
-```cpp
 #include <SPI.h>
 #include <Ethernet.h>
 
@@ -35,15 +30,3 @@ void setup() {
 
 void loop() {
 }
-```
-
-Serial Monitor :
-```shell
-DHCP OK!
-```
-
-<img src="/Picture/ESP_Eternet_1001.jpg" alt="Diagram plc" style="float: left; margin-right: 20px; margin-bottom: 15px;" />
-
-<img src="/Picture/ESP_Eternet_1002.jpg" alt="Diagram plc" style="float: left; margin-right: 20px; margin-bottom: 15px;" />
-
----
