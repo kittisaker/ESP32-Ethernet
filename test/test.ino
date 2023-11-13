@@ -2,48 +2,43 @@
 #include <Ethernet.h>
 
 byte MAC[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
-
 EthernetClient ethClient;
 
 void setup() {
   Serial.begin(115200);
-
   Ethernet.init(5);
 
-  if (Ethernet.begin(MAC)) {  // Dynamic IP setup
+  if (Ethernet.begin(MAC)) {
     Serial.println("DHCP OK!");
   } else {
-    Serial.println("Failed to configure Ethernet using DHCP");
-
-    if (Ethernet.hardwareStatus() == EthernetNoHardware) {
-      Serial.println("Ethernet shield was not found.  Sorry, can't run without hardware. :(");
-      while (true) {
-        delay(1);
-      }
-    }
-
-    if (Ethernet.linkStatus() == LinkOFF) {
-      Serial.println("Ethernet cable is not connected.");
-    }
+    handleEthernetError();
   }
 }
 
 void loop() {
-  // Check Ethernet connection status
-  checkEthernetStatus();
-  delay(10000); // Delay between checks (10 seconds)
+  testEthernetConnection();
+  delay(10000); // Delay between tests (10 seconds)
 }
 
-void checkEthernetStatus() {
-  switch (Ethernet.linkStatus()) {
-    case LinkON:
-      Serial.println("Ethernet cable is connected.");
-      break;
-    case LinkOFF:
-      Serial.println("Ethernet cable is not connected.");
-      break;
-    default:
-      Serial.println("Unknown Ethernet status.");
-      break;
+void handleEthernetError() {
+  Serial.println("Failed to configure Ethernet using DHCP");
+  if (Ethernet.hardwareStatus() == EthernetNoHardware) {
+    Serial.println("Ethernet shield was not found.");
+    while (true) {
+      delay(1); // Halt the program
+    }
+  }
+  if (Ethernet.linkStatus() == LinkOFF) {
+    Serial.println("Ethernet cable is not connected.");
+  }
+}
+
+void testEthernetConnection() {
+  // Try to connect to a known server (e.g., Google's public DNS server)
+  if (ethClient.connect("8.8.8.8", 80)) {
+    Serial.println("Connection test successful");
+    ethClient.stop(); // Disconnect after the test
+  } else {
+    Serial.println("Connection test failed");
   }
 }
