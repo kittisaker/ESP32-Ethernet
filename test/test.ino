@@ -1,8 +1,3 @@
-# ESP32-Ethernet : Chapter 2 Get Ethernet connection status
-
-## Tested by KOPE
-
-```cpp
 #include <SPI.h>
 #include <Ethernet.h>
 
@@ -52,14 +47,3 @@ void checkEthernetStatus() {
       break;
   }
 }
-```
-
-Serial Monitor :
-```shell
-DHCP OK!
-Ethernet cable is connected.
-Ethernet cable is connected.
-Ethernet cable is connected.
-```
-
----
