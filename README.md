@@ -1,4 +1,4 @@
-# ESP32-Ethernet : Chapter 1 Get  Connect to Ethernet
+# ESP32-Ethernet : Chapter 2 Get Ethernet connection status
 
 ## Tested by KOPE
 
@@ -6,7 +6,7 @@
 #include <SPI.h>
 #include <Ethernet.h>
 
-byte MAC[10] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+byte MAC[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 
 EthernetClient ethClient;
 
@@ -34,16 +34,32 @@ void setup() {
 }
 
 void loop() {
+  // Check Ethernet connection status
+  checkEthernetStatus();
+  delay(10000); // Delay between checks (10 seconds)
+}
+
+void checkEthernetStatus() {
+  switch (Ethernet.linkStatus()) {
+    case LinkON:
+      Serial.println("Ethernet cable is connected.");
+      break;
+    case LinkOFF:
+      Serial.println("Ethernet cable is not connected.");
+      break;
+    default:
+      Serial.println("Unknown Ethernet status.");
+      break;
+  }
 }
 ```
 
 Serial Monitor :
 ```shell
 DHCP OK!
+Ethernet cable is connected.
+Ethernet cable is connected.
+Ethernet cable is connected.
 ```
-
-<img src="/Picture/ESP_Eternet_1001.jpg" alt="Diagram plc" style="float: left; margin-right: 20px; margin-bottom: 15px;" />
-
-<img src="/Picture/ESP_Eternet_1002.jpg" alt="Diagram plc" style="float: left; margin-right: 20px; margin-bottom: 15px;" />
 
 ---
