@@ -10,28 +10,26 @@ void setup() {
 
   Ethernet.init(5);
 
-  if (Ethernet.begin(MAC)) {  // Dynamic IP setup
-    Serial.println("DHCP OK!");
+  // Set a static IP address
+  IPAddress ip(192, 168, 0, 177);  // Your desired IP Address
+  IPAddress subnet(255, 255, 255, 0); // Subnet Mask
+  IPAddress gateway(192, 168, 0, 1);  // Gateway (router) IP address
+  IPAddress dns(192, 168, 0, 1);  // DNS server IP address (Google's public DNS)
 
-    // Get and print the IP address
-    IPAddress ip = Ethernet.localIP();
-    Serial.print("My IP address: ");
-    Serial.println(ip);
+  Ethernet.begin(MAC, ip, dns, gateway, subnet);
 
-  } else {
-    Serial.println("Failed to configure Ethernet using DHCP");
+  // Print network settings
+  Serial.print("IP Address: ");
+  Serial.println(Ethernet.localIP());
 
-    if (Ethernet.hardwareStatus() == EthernetNoHardware) {
-      Serial.println("Ethernet shield was not found.  Sorry, can't run without hardware. :(");
-      while (true) {
-        delay(1);
-      }
-    }
+  Serial.print("Subnet Mask: ");
+  Serial.println(Ethernet.subnetMask());
 
-    if (Ethernet.linkStatus() == LinkOFF) {
-      Serial.println("Ethernet cable is not connected.");
-    }
-  }
+  Serial.print("Gateway: ");
+  Serial.println(Ethernet.gatewayIP());
+
+  Serial.print("DNS Server: ");
+  Serial.println(Ethernet.dnsServerIP());
 }
 
 void loop() {
